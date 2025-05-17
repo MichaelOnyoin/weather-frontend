@@ -3,11 +3,24 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Wind, Sun, Thermometer, Droplets} from 'lucide-react'
 
+interface WeatherData {
+  name: string;
+  main: {
+    temp: number;
+    humidity: number;
+    feels_like: number;
+    pressure: number;
+  };
+  weather: { description: string; icon: string; }[];
+  wind: { speed: number; deg: number };
+  sys: { country: string; sunrise: number; sunset: number };
+  timezone: number;
+  }
 
 export function Weather(){
   
   const [city, setCity] = useState<string>('');
-  const [weather, setWeather] = useState<any>(null);
+  const [weather, setWeather] = useState<WeatherData>({} as WeatherData);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -86,7 +99,7 @@ export function Weather(){
             <div className="text-4xl font-bold text-gray-800">{weather.main.temp}°C</div>
             <div className="text-gray-600 text-xl">{weather.weather[0].description}</div>
             <div className="text-lg font-bold text-gray-700">{new Date().toLocaleString() + ''}</div>
-            <p className='text-slate-700'>{new Date((weather.dt + weather.timezone)*1000).toISOString().substring(0,10)}</p>
+           
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4 p-4">
             <div className="flex flex-col items-center">
