@@ -20,11 +20,13 @@ export const Forecast = () => {
     const [data, setData] = useState<WeatherData | null>(null);
     const [unit, setUnit] = useState<"metric" | "imperial">("metric");
     
-    const apiKey = "5903236a4f6da416d119d851a5de7b02";
+    //const apiKey = "5903236a4f6da416d119d851a5de7b02";
 
     const fetchData = async () => {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${apiKey}`;
-    const res = await axios.get(url);
+    const backendUrl = `http://localhost:8000/api/weather?city=${city}&units=${unit}`;
+    //const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${apiKey}`;
+    //const res = await axios.get(url);
+    const res = await axios.get(backendUrl);
     setData(res.data);
   };
 
@@ -124,11 +126,11 @@ export const Forecast = () => {
                     {/* Humidity */}
                     <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center shadow">
                     <div className="text-gray-600 mb-2">Humidity</div>
-                    <div className="text-2xl font-bold text-gray-800 mb-1">
+                    <div className="text-2xl font-bold text-gray-800 mb-1 ">
                         {today.main.humidity}%
                     </div>
                     <progress
-                        className="text-blue-300 w-full mt-2"
+                        className="text-blue-300 w-full mt-2 progress"
                         value={today.main.humidity}
                         max="100"
                     />
