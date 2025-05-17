@@ -29,3 +29,10 @@ body {
 .progress {
   color: rgb(107, 151, 231);
 }
+.progress::-webkit-progress-value {
+  background: rgb(92, 152, 230);
+}
+
+.progress::-moz-progress-bar {
+  background: lightcolor;
+}
