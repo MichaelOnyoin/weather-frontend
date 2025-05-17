@@ -20,7 +20,6 @@ export const Forecast = () => {
     const [data, setData] = useState<WeatherData | null>(null);
     const [unit, setUnit] = useState<"metric" | "imperial">("metric");
     
-    //const apiKey = "5903236a4f6da416d119d851a5de7b02";
 
     const fetchData = async () => {
     const backendUrl = `http://localhost:8000/api/weather?city=${city}&units=${unit}`;
