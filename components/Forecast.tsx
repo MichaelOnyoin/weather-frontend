@@ -22,9 +22,10 @@ export const Forecast = () => {
     
 
     const fetchData = async () => {
-    const backendUrl = `http://localhost:8000/api/weather?city=${city}&units=${unit}`;
+    //const backendUrl = `http://localhost:8000/api/weather?city=${city}&units=${unit}`;
     //const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${apiKey}`;
     //const res = await axios.get(url);
+    const backendUrl = `https://weather-backend-master-bkxef2.laravel.cloud/api/weather?city=${city}&units=${unit}`;
     const res = await axios.get(backendUrl);
     setData(res.data);
   };
