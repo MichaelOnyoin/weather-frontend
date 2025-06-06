@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Wind,  Droplets, Search} from 'lucide-react';
+import { Wind, Droplets, Search} from 'lucide-react';
 
 interface WeatherData {
   list: {
@@ -14,21 +14,26 @@ interface WeatherData {
     name: string;
   };
 }
+//NEXT_PUBLIC_API_URL=http://localhost:8000/api for next session
 
 export const Forecast = () => {
     const [city, setCity] = useState<string>('Nairobi');
     const [data, setData] = useState<WeatherData | null>(null);
     const [unit, setUnit] = useState<"metric" | "imperial">("metric");
-    
+    const [loading, setLoading] = useState(false);
 
     const fetchData = async () => {
-    //const backendUrl = `http://localhost:8000/api/weather?city=${city}&units=${unit}`;
-    //const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${apiKey}`;
-    //const res = await axios.get(url);
-    const backendUrl = `https://weather-backend-master-bkxef2.laravel.cloud/api/weather?city=${city}&units=${unit}`;
-    const res = await axios.get(backendUrl);
-    setData(res.data);
-  };
+      setLoading(true);
+      try {
+        const backendUrl = `https://weather-backend-master-bkxef2.laravel.cloud/api/weather?city=${city}&units=${unit}`;
+        const res = await axios.get(backendUrl);
+        setData(res.data);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   useEffect(() => {
     fetchData();
@@ -56,6 +61,7 @@ export const Forecast = () => {
                 className="border border-orange-400 rounded-full px-3 py-1 text-gray-700 focus:outline-none"
                 /></form>
                 <button onClick={fetchData} className="flex rounded-md p-2 hover:bg-green-400">
+                {loading ? 'Loading...' : ''}
                 <Search className="text-blue-500 hover:text-white" role="button" />
                 </button>
                 <button
@@ -140,6 +146,10 @@ export const Forecast = () => {
                 </div>
             </div>
             )}
+            {!data && !loading && (
+                <div className="text-center text-gray-500 mt-6">No data available. Please try a different city.</div>
+            )}
+            
         </div>
 );
 }
